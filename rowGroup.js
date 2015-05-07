@@ -6,7 +6,7 @@
     
     defaults: {
         decimal: true,
-    	textFormat: function(v, st, opt, td) {		
+    	textFormat: function(v, st, opt, td, idTable) {		
 		    if($(td).attr("display")!='none'){
                 
                 var row = st.rowIdx + 1;
@@ -24,7 +24,7 @@
                         }
 
                         if(equalLine == true){
-                            var nextTd = $('#tabela_funcaoTable tbody tr').eq(row).find('td:eq('+st.colIdx+')')[0];
+                            var nextTd = $('#'+idTable+' tbody tr').eq(row).find('td:eq('+st.colIdx+')')[0];
                             if(nextTd){
                                 $(nextTd).css('display','none'); //remove();     
                                 $(nextTd).attr('display','none');
@@ -33,7 +33,7 @@
                             countRows++;
                         }
                     }else{
-                        var nextTd = $('#tabela_funcaoTable tbody tr').eq(row).find('td:eq('+st.colIdx+')')[0];
+                        var nextTd = $('#'+idTable+' tbody tr').eq(row).find('td:eq('+st.colIdx+')')[0];
                         if(nextTd){
                             $(nextTd).css('display','none'); //remove();     
                             $(nextTd).attr('display','none');
@@ -45,7 +45,7 @@
                 
                 //verify last row
                 if(st.tableData[row][st.colIdx] == v && equalLine==true){
-                    var nextTd = $('#tabela_funcaoTable tbody tr').eq(row).find('td:eq('+st.colIdx+')')[0];
+                    var nextTd = $('#'+idTable+' tbody tr').eq(row).find('td:eq('+st.colIdx+')')[0];
                     if(nextTd){
                         $(nextTd).css('display','none'); //remove();     
                         $(nextTd).attr('display','none');
@@ -65,7 +65,8 @@
     },
     
     implementation: function(tgt, st, opt){
-      var text = opt.textFormat.call(this, st.value, st, opt, tgt);
+      var idTable = $(tgt).closest('table').attr('id');
+      var text = opt.textFormat.call(this, st.value, st, opt, tgt, idTable);
       $(tgt).empty().append("<span style='text-align:right;'>"+text+"</span>");
     }
     
